@@ -40,6 +40,6 @@ def list_comprehension_no_dots(data):
 def generator_expression(data):
     new_data = (item['properties'].get('STREET').lower() for item in data['features']
                 if item['properties'].get('STREET') is not None)
-    result = {"new_data": new_data}
+    result = {"new_data": list(new_data)}
     return json.dumps(result)
 
