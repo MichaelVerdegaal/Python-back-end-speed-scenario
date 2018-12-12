@@ -5,12 +5,6 @@ from waitress import serve
 from util import *
 
 
-@view_config(route_name='api.home')
-def home(request):
-    """Handle the default request, for when no endpoint is specified."""
-    return Response('This is Michael\'s REST API!')
-
-
 @view_config(route_name='api.data', renderer='json')
 def data(request):
     """Handle the request, to retrieve the entire dataset"""
