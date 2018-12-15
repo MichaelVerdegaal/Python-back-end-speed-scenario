@@ -2,7 +2,7 @@ from pyramid.config import Configurator
 from pyramid.response import Response
 from pyramid.view import view_config
 from waitress import serve
-from util import *
+from util import load_data, total_slow, total_fast
 from loop_util import *
 from format_util import *
 from concat_util import *
@@ -40,6 +40,20 @@ def concat(request):
     response = concat_join(data)
     return Response(json.dumps(response))
 
+@view_config(route_name='api.slow', renderer='json')
+def slow(request):
+    """Handle the request to format the house numbers"""
+    data = load_data()
+    response = total_slow(data)
+    return Response(json.dumps(response))
+
+@view_config(route_name='api.fast', renderer='json')
+def fast(request):
+    """Handle the request to format the house numbers"""
+    data = load_data()
+    response = total_slow(data)
+    return Response(json.dumps(response))
+
 
 if __name__ == '__main__':
     config = Configurator()
@@ -48,6 +62,8 @@ if __name__ == '__main__':
     config.add_route('api.loop', '/loop')
     config.add_route('api.format', '/format')
     config.add_route('api.concat', '/concat')
+    config.add_route('api.slow', '/slow')
+    config.add_route('api.fast', '/fast')
 
     config.scan()
     app = config.make_wsgi_app()
