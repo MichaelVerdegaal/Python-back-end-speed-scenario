@@ -6,7 +6,9 @@ from util import load_data, total_slow, total_fast
 from loop_util import *
 from format_util import *
 from concat_util import *
-import json
+# import json
+# import simplejson as json
+import ujson as json
 
 
 @view_config(route_name='api.loop', renderer='json')
@@ -40,6 +42,7 @@ def concat(request):
     response = concat_join(data)
     return Response(json.dumps(response))
 
+
 @view_config(route_name='api.slow', renderer='json')
 def slow(request):
     """Handle the request to format the house numbers"""
@@ -47,11 +50,12 @@ def slow(request):
     response = total_slow(data)
     return Response(json.dumps(response))
 
+
 @view_config(route_name='api.fast', renderer='json')
 def fast(request):
     """Handle the request to format the house numbers"""
     data = load_data()
-    response = total_slow(data)
+    response = total_fast(data)
     return Response(json.dumps(response))
 
 
