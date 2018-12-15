@@ -5,6 +5,7 @@ from waitress import serve
 from util import *
 from loop_util import *
 from format_util import *
+from concat_util import *
 import json
 
 
@@ -30,12 +31,23 @@ def loop(request):
     return Response(json.dumps(response))
 
 
+@view_config(route_name='api.concat', renderer='json')
+def concat(request):
+    """Handle the request to format the house numbers"""
+    data = load_data()
+    # response = concat_plus(data)
+    # response = concat_plus_is(data)
+    response = concat_join(data)
+    return Response(json.dumps(response))
+
+
 if __name__ == '__main__':
     config = Configurator()
     config.include('pyramid_debugtoolbar')
 
     config.add_route('api.loop', '/loop')
     config.add_route('api.format', '/format')
+    config.add_route('api.concat', '/concat')
 
     config.scan()
     app = config.make_wsgi_app()
